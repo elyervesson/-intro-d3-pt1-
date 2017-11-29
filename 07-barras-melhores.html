@@ -60,8 +60,8 @@
       // definicoes de altura e largura do svg e da vis dentro
       var alturaSVG = 400, larguraSVG = 900;
       var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico
-          larguraVis = larguraSVG - margin.left - margin.right,
-          alturaVis = alturaSVG - margin.top - margin.bottom;
+      larguraVis = larguraSVG - margin.left - margin.right,
+      alturaVis = alturaSVG - margin.top - margin.bottom;
 
       /*
        * Prepara onde adicionaremos a visualizacao
@@ -77,10 +77,14 @@
       /*
        * As escalas
        */
-      var x = d3.scaleBand(); // Configure essa escala com domain, range e padding
-
-      var y = d3.scaleLinear() // Configure essa escala com domain e range
-                               // Lembre que uma escala pode converter de 1..10 -> 100..1
+      var valMax = d3.max(dados, (d, i) => d.valor) + 10;
+      var x = d3.scaleBand()
+                .domain(dados.map(function(d) { return d.letra; }))
+                .range([0,larguraVis])
+                .padding(.1);
+      var y = d3.scaleLinear()
+                .domain([0, valMax])
+                .range([alturaVis,0]);
 
       // === ATÉ DAQUI ===
 
